@@ -16,12 +16,20 @@ namespace Azure.Monitor.Cli
                    .AddUserSecrets<Program>();
             var configuration = builder.Build();
 
-            var options = configuration.GetSection(nameof(ServiceBusMonitorOptions)).Get<ServiceBusMonitorOptions>();
+            // await new AzureMonitor()
+            //             .ForServiceBus(connectionString, sb => sb.Topics()
+            //                                                      .Queues())
+            //             .OutputJsonFile(filePath)
+            //             .OutputJsonBlob(blobSas)
+            //             .OutputJsonConsole()
 
-            ServiceBusMonitor monitor = new ServiceBusMonitor(options);
-            monitor.AddOutput(new ConsoleOutput());
+            //             .OutputXmlFile(filePath)
+            //             .OutputXmlBlob(blobSas)
+            //             .OutputXmlConsole()
 
-            await monitor.MonitorTopicsAsync();
+            //             .OutputConsole()
+
+            //             .StartAsync();
         }
     }
 }

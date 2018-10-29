@@ -19,7 +19,7 @@ namespace Azure.Monitor.ServiceBus
             => record.Set(Properties.SizeInBytes, size);
 
         private static MonitorRecord SetLastAccessedAt(this MonitorRecord record, DateTime value)
-            => record.Set(Properties.LastAccessedAt, value);
+            => record.Set(Properties.LastAccessedAt, value.ToString());
 
         private static MonitorRecord SetSubscriptionCount(this MonitorRecord record, long count)
             => record.Set(Properties.SubscriptionCount, count);

@@ -5,7 +5,7 @@ using Azure.Monitor.Outputs;
 
 namespace Azure.Monitor
 {
-    public class AzureMonitor
+    public class AzureMonitor : IDisposable
     {
         private readonly CompositeOutput _outputs = new CompositeOutput();
         private readonly CompositeMonitor _monitors = new CompositeMonitor();
@@ -16,6 +16,14 @@ namespace Azure.Monitor
         public async Task StartAsync()
         {
             await _monitors.MonitorAsync(_outputs).ConfigureAwait(false);
+
+            await _outputs.FlushAsync().ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+            _outputs.Dispose();
+            _monitors.Dispose();
         }
     }
 }

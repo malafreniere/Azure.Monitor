@@ -7,7 +7,7 @@ namespace Azure.Monitor.Formatters
     public class XmlFormatter : DataContractFormatterBase
     {
         public XmlFormatter()
-            : base(new DataContractSerializer(typeof(MonitorRecord)))
+            : base(new DataContractSerializer(typeof(MonitorRecords)))
         {
         }
     }

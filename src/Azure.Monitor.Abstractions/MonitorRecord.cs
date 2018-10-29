@@ -5,56 +5,73 @@ using System.Runtime.Serialization;
 namespace Azure.Monitor.Abstractions
 {
     [DataContract]
+    public class MonitorRecords
+    {
+        [DataMember(Name = "Records")]
+        public MonitorRecord[] Records { get; set; }
+    }
+
+    [DataContract]
     public class MonitorRecord : IDictionary<string, object>
     {
-        [DataMember]
-        public string Parent { get; }
+        [DataMember(Name = "Parent")]
+        internal string _parent;
 
-        [DataMember]
-        public string ResourceName { get; }
+        [DataMember(Name = "ResourceName")]
+        internal string _resourceName;
 
-        [DataMember]
-        public string ResourceType { get; }
+        [DataMember(Name = "ResourceType")]
+        internal string _resourceType;
 
-        [DataMember]
-        public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
+        [DataMember(Name = "Properties")]
+        internal IDictionary<string, object> _properties = new Dictionary<string, object>();
+
+        public string Parent => _parent;
+
+        public string ResourceName => _resourceName;
+
+        public string ResourceType => _resourceType;
+
+        public IDictionary<string, object> Properties => _properties;
+
+        internal MonitorRecord() { }
 
         public MonitorRecord(string parent, string resourceName, string resourceType)
         {
-            Parent = parent;
-            ResourceName = resourceName;
-            ResourceType = resourceType;
+            _parent = parent;
+            _resourceName = resourceName;
+            _resourceType = resourceType;
         }
 
         #region Dictionary properties and methods
 
-        public ICollection<string> Keys => Properties.Keys;
+        public ICollection<string> Keys => _properties.Keys;
 
-        public ICollection<object> Values => Properties.Values;
+        public ICollection<object> Values => _properties.Values;
 
-        public int Count => Properties.Count;
+        public int Count => _properties.Count;
 
-        public bool IsReadOnly => Properties.IsReadOnly;
+        public bool IsReadOnly => _properties.IsReadOnly;
 
-        public object this[string key] { get => Properties[key]; set => Properties[key] = value; }
+        public object this[string key] { get => Properties[key]; set => _properties[key] = value; }
 
-        public void Add(string key, object value) => Properties.Add(key, value);
+        public void Add(string key, object value) => _properties.Add(key, value);
 
-        public bool ContainsKey(string key) => Properties.ContainsKey(key);
+        public bool ContainsKey(string key) => _properties.ContainsKey(key);
 
-        public bool Remove(string key) => Properties.Remove(key);
+        public bool Remove(string key) => _properties.Remove(key);
 
-        public bool TryGetValue(string key, out object value) => Properties.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out object value) => _properties.TryGetValue(key, out value);
 
-        public void Add(KeyValuePair<string, object> item) => Properties.Add(item);
+        public void Add(KeyValuePair<string, object> item) => _properties.Add(item);
 
-        public void Clear() => Properties.Clear();
+        public void Clear() => _properties.Clear();
 
-        public bool Contains(KeyValuePair<string, object> item) => Properties.Contains(item);
+        public bool Contains(KeyValuePair<string, object> item) => _properties.Contains(item);
 
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => Properties.CopyTo(array, arrayIndex);
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => _properties.CopyTo(array, arrayIndex);
 
-        public bool Remove(KeyValuePair<string, object> item) => Properties.Remove(item);
+        public bool Remove(KeyValuePair<string, object> item) => _properties.Remove(item);
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => Properties.GetEnumerator();
 

@@ -10,7 +10,7 @@ namespace Azure.Monitor.Formatters
     public class JsonFormatter : DataContractFormatterBase
     {
         public JsonFormatter()
-            : base(new DataContractJsonSerializer(typeof(MonitorRecord)))
+            : base(new DataContractJsonSerializer(typeof(MonitorRecords)))
         {
         }
     }

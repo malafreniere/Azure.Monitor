@@ -9,11 +9,18 @@ namespace Azure.Monitor.Formatters
     {
         private void Format(StringBuilder sb, MonitorRecord record)
         {
-            sb.AppendLine($"Name: {record.ResourceName} Type: {record.ResourceType} Parent: {record.Parent}");
+            const char indent = ' ';
+
+            sb.AppendLine(record.Parent);
+
+            sb.Append(indent);
+            sb.AppendLine($"{record.ResourceType}: {record.ResourceName}");
 
             foreach (var property in record.Properties)
             {
-                sb.AppendLine($"\t{property.Key}: {property.Value}");
+                sb.Append(indent);
+                sb.Append(indent);
+                sb.AppendLine($"{property.Key}: {property.Value}");
             }
         }
 

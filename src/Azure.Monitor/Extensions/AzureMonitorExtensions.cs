@@ -5,6 +5,15 @@ namespace Azure.Monitor
 {
     public static class AzureMonitorExtensions
     {
+        public static AzureMonitor OutputInMemory(this AzureMonitor monitor, out InMemoryOutput output)
+        {
+            output = new InMemoryOutput();
+
+            monitor.AddOutput(output);
+
+            return monitor;
+        }
+
         public static AzureMonitor OutputJsonFile(this AzureMonitor monitor, string filePath)
         {
             monitor.AddOutput(new FileOutput(filePath, new JsonFormatter()));

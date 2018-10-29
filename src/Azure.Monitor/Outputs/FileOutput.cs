@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Monitor.Abstractions;
@@ -19,13 +20,15 @@ namespace Azure.Monitor.Outputs
 
         protected override async Task FlushAsync(IEnumerable<MonitorRecord> records)
         {
-            using (var sw = new StreamWriter(File.OpenWrite(_filePath)))
+            using (var sw = new StreamWriter(File.Open(_filePath, FileMode.Create, FileAccess.Write)))
             {
                 string output = _formatter.Format(records);
 
                 await sw.WriteLineAsync(output).ConfigureAwait(false);
                 await sw.FlushAsync().ConfigureAwait(false);
             }
+
+            Debug.WriteLine($"Writing output to... {new FileInfo(_filePath).FullName}");
         }
     }
 }

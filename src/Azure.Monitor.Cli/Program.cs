@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Azure.Monitor.Outputs;
 using Azure.Monitor.ServiceBus;
 using Microsoft.Extensions.Configuration;
 
@@ -15,6 +16,19 @@ namespace Azure.Monitor.Cli
             builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                    .AddUserSecrets<Program>();
             var configuration = builder.Build();
+
+            string connectionString = configuration.GetConnectionString("ServiceBus");
+
+            using (var monitor = new AzureMonitor())
+            {
+                await monitor.ForServiceBus(connectionString, sb => sb.Topics("system_heartbeat-v1"))
+                             .OutputConsole()
+                             .OutputJsonFile("output.json")
+                             .OutputInMemory(out InMemoryOutput o)
+                             .StartAsync();
+
+            }
+
 
             // await new AzureMonitor()
             //             .ForServiceBus(connectionString, sb => sb.Topics()

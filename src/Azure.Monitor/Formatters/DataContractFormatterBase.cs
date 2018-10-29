@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Azure.Monitor.Abstractions;
@@ -18,15 +19,21 @@ namespace Azure.Monitor.Formatters
 
         public string Format(MonitorRecord record)
         {
-            using (var ms = new MemoryStream())
+            return Format(new MonitorRecords
             {
-                _serializer.WriteObject(ms, record);
-
-                return Encoding.UTF8.GetString(ms.ToArray());
-            }
+                Records = new[] { record }
+            });
         }
 
         public string Format(IEnumerable<MonitorRecord> records)
+        {
+            return Format(new MonitorRecords
+            {
+                Records = records.ToArray()
+            });
+        }
+
+        private string Format(MonitorRecords records)
         {
             using (var ms = new MemoryStream())
             {

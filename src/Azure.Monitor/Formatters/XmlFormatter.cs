@@ -4,11 +4,7 @@ using Azure.Monitor.Abstractions.Formatters;
 
 namespace Azure.Monitor.Formatters
 {
-    public class XmlFormatter : DataContractFormatterBase
+    public class XmlFormatter : DataContractFormatterBase<DataContractSerializer>
     {
-        public XmlFormatter()
-            : base(new DataContractSerializer(typeof(MonitorRecords)))
-        {
-        }
     }
 }

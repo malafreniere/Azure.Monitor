@@ -7,11 +7,7 @@ using Azure.Monitor.Abstractions.Formatters;
 
 namespace Azure.Monitor.Formatters
 {
-    public class JsonFormatter : DataContractFormatterBase
+    public class JsonFormatter : DataContractFormatterBase<DataContractJsonSerializer>
     {
-        public JsonFormatter()
-            : base(new DataContractJsonSerializer(typeof(MonitorRecords)))
-        {
-        }
     }
 }

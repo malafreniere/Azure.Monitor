@@ -26,7 +26,7 @@ namespace Azure.Monitor.ServiceBus
 
         private static MonitorRecord Set<T>(this MonitorRecord record, string key, T value)
         {
-            record[key] = value;
+            record.Properties[key] = value;
 
             return record;
         }

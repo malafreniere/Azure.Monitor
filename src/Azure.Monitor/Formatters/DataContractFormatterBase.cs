@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,13 +9,18 @@ using Azure.Monitor.Abstractions.Formatters;
 
 namespace Azure.Monitor.Formatters
 {
-    public abstract class DataContractFormatterBase : IOutputFormatter
+    public abstract class DataContractFormatterBase<T> : IOutputFormatter where T : XmlObjectSerializer
     {
         protected readonly XmlObjectSerializer _serializer;
 
-        protected DataContractFormatterBase(XmlObjectSerializer serializer)
+        protected DataContractFormatterBase()
         {
-            _serializer = serializer;
+            if (typeof(T).IsAbstract)
+            {
+                throw new ArgumentException($"DataContractFormatterBase<{typeof(T).Name}>: {typeof(T).Name} must not be abstract.");
+            }
+
+            _serializer = (T)Activator.CreateInstance(typeof(T), typeof(MonitorRecords));
         }
 
         public string Format(MonitorRecord record)

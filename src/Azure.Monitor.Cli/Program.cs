@@ -24,6 +24,7 @@ namespace Azure.Monitor.Cli
                 await monitor.ForServiceBus(connectionString, sb => sb.AllTopics())
                              .OutputConsole()
                              .OutputJsonFile("output.json")
+                             .OutputXmlFile("output.xml")
                              .OutputInMemory(out InMemoryOutput o)
                              .StartAsync();
 

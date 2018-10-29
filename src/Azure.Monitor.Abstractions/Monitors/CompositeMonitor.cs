@@ -16,7 +16,7 @@ namespace Azure.Monitor.Abstractions
         {
             foreach (var monitor in _monitors)
             {
-                await monitor.MonitorAsync(output);
+                await monitor.MonitorAsync(output).ConfigureAwait(false);
             }
         }
     }

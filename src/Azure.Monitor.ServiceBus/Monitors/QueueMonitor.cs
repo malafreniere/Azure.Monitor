@@ -17,12 +17,12 @@ namespace Azure.Monitor.ServiceBus
 
         protected override async Task<IEnumerable<MonitorRecord>> MonitorAsync(string serviceBus, ManagementClient client)
         {
-            var queuePaths = await _options.Selector.SelectQueuesAsync(client, _options);
+            var queuePaths = await _options.Selector.SelectQueuesAsync(client, _options).ConfigureAwait(false);
             Queue<MonitorRecord> records = new Queue<MonitorRecord>();
 
             foreach (var queuePath in queuePaths)
             {
-                var queue = await client.GetQueueRuntimeInfoAsync(queuePath);
+                var queue = await client.GetQueueRuntimeInfoAsync(queuePath).ConfigureAwait(false);
                 var record = new MonitorRecord(serviceBus, queue.Path, Properties.QueueResourceType).SetProperties(queue);
 
                 records.Enqueue(record);

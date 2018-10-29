@@ -30,7 +30,7 @@ namespace Azure.Monitor.ServiceBus.Selectors
 
             do
             {
-                var topicDescriptions = await client.GetTopicsAsync(take, skip);
+                var topicDescriptions = await client.GetTopicsAsync(take, skip).ConfigureAwait(false);
 
                 foreach (var description in topicDescriptions.Where(d => _predicate(d)))
                 {

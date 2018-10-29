@@ -29,7 +29,7 @@ namespace Azure.Monitor.ServiceBus.Selectors
 
             do
             {
-                var queueDescriptions = await client.GetQueuesAsync(take, skip);
+                var queueDescriptions = await client.GetQueuesAsync(take, skip).ConfigureAwait(false);
 
                 foreach (var description in queueDescriptions.Where(d => _predicate(d)))
                 {

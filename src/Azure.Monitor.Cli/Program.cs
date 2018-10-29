@@ -21,29 +21,13 @@ namespace Azure.Monitor.Cli
 
             using (var monitor = new AzureMonitor())
             {
-                await monitor.ForServiceBus(connectionString, sb => sb.Topics("system_heartbeat-v1"))
+                await monitor.ForServiceBus(connectionString, sb => sb.AllTopics())
                              .OutputConsole()
                              .OutputJsonFile("output.json")
                              .OutputInMemory(out InMemoryOutput o)
                              .StartAsync();
 
             }
-
-
-            // await new AzureMonitor()
-            //             .ForServiceBus(connectionString, sb => sb.Topics()
-            //                                                      .Queues())
-            //             .OutputJsonFile(filePath)
-            //             .OutputJsonBlob(blobSas)
-            //             .OutputJsonConsole()
-
-            //             .OutputXmlFile(filePath)
-            //             .OutputXmlBlob(blobSas)
-            //             .OutputXmlConsole()
-
-            //             .OutputConsole()
-
-            //             .StartAsync();
         }
     }
 }

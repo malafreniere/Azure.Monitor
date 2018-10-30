@@ -1,4 +1,28 @@
+#---------------------------------#
+#      general configuration      #
+#---------------------------------#
 version: 1.0.{build}
+
 skip_branch_with_pr: true
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "1.0.{build}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+#---------------------------------#
+#       build configuration       #
+#---------------------------------#
+
+platform: Any CPU
+
+configuration: Release
+
 build:
   verbosity: minimal

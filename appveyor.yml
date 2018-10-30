@@ -9,6 +9,8 @@ skip_branch_with_pr: true
 #    environment configuration    #
 #---------------------------------#
 
+image: Visual Studio 2017
+
 assembly_info:
   patch: true
   file: AssemblyInfo.*
